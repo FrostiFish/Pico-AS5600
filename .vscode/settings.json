@@ -1,0 +1,37 @@
+{
+    "cortex-debug.openocdPath": "/Users/timax/Development/pi_pico/openocd/src/openocd",
+    "editor.formatOnSave": true,
+    "C_Cpp.clang_format_fallbackStyle": "WebKit",
+    "psi-header.config": {
+        "blankLinesAfter": 0
+    },
+    "psi-header.variables": [
+        [
+            "projectCreationYear",
+            "2024"
+        ],
+        [
+            "copyrightholder",
+            "M.Kusiak (Timax)"
+        ],
+        [
+            "projectname",
+            "dwm_pico_as5600"
+        ]
+    ],
+    "psi-header.templates": [
+        {
+            "language": "*",
+            "template": [
+                "File: <<filename>>",
+                "Project: <<projectname>>",
+                "-----",
+                "This source code is released under BSD-3 license.",
+                "Check LICENSE file for full license agreement.",
+                "Check COPYING for 3rd party licenses.",
+                "-----",
+                "Copyright <<projectCreationYear>> <<copyrightholder>>"
+            ]
+        }
+    ]
+}

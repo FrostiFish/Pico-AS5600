@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${env:PICO_SDK_PATH}/**"
+            ],
+            "compilerPath": "/opt/homebrew/bin/arm-none-eabi-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm"
+        }
+    ],
+    "version": 4
+}
