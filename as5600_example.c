@@ -9,11 +9,12 @@
  * Copyright 2024 M.Kusiak (Timax)
  */
 
+#include <stdio.h>
+#include "AS5600.h"
 #include "hardware/gpio.h"
 #include "hardware/i2c.h"
-#include "lib/dwm_pico_AS5600/dwm_pico_AS5600.h"
 #include "pico/stdlib.h"
-#include <stdio.h>
+
 
 #define SPACES "                              "
 

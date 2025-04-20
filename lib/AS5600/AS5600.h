@@ -9,8 +9,8 @@
  * Copyright 2024 M.Kusiak (Timax)
  */
 
-#ifndef DWM_PICO_AS5600_H
-#define DWM_PICO_AS5600_H
+#ifndef AS5600_H
+#define AS5600_H
 
 #include "hardware/i2c.h"
 #include "pico/stdlib.h"

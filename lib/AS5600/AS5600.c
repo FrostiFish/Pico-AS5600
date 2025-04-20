@@ -9,11 +9,11 @@
  * Copyright 2024 M.Kusiak (Timax)
  */
 
-#include "dwm_pico_AS5600.h"
+#include <stdio.h>
+#include "AS5600.h"
 #include "hardware/i2c.h"
 #include "pico/stdlib.h"
 #include <math.h>
-#include <stdio.h>
 
 // Default as5600 i2c address, not configurable.
 #define AS5600_DEFAULT_ADDRESS 0x36
