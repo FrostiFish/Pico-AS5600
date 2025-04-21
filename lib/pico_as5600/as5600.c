@@ -10,7 +10,7 @@
  */
 
 #include <stdio.h>
-#include "AS5600.h"
+#include "as5600.h"
 #include "hardware/i2c.h"
 #include "pico/stdlib.h"
 #include <math.h>
@@ -95,6 +95,7 @@ gpio_i2c_t get_gpio_i2c_type(uint8_t gpio)
         return CLOCK;
     return DATA;
 }
+#define GPIO_I2C_TYPE(gpio) ((gpio % 2) ? CLOCK : DATA )
 
 /**
  * @brief       Get i2c instance number.
@@ -108,6 +109,10 @@ i2c_inst_t* get_i2c_inst(uint8_t gpio)
         return i2c0;
     return i2c1;
 }
+#define I2C_INSTANCE_BY_GPIO(gpio) (((gpio % 4) < 2) ? i2c0 : i2c1 )
+#define I2C_NUM_BY_GPIO(gpio) (((gpio % 4) < 2) ? 0 : 1 )
+
+#define AS5600_ASSERT_I2C(sda, clk) ( (GPIO_I2C_TYPE(sda) != DATA) | (GPIO_I2C_TYPE(clk) != CLOCK) | (I2C_NUM_BY_GPIO(sda) != I2C_NUM_BY_GPIO(clk)) ? 0 : 1)
 
 /**
  * @brief           Initialise as5600 module.
@@ -122,27 +127,29 @@ i2c_inst_t* get_i2c_inst(uint8_t gpio)
  *
  * @warning         i2c must be initialised first!
  */
-int8_t as5600_init(uint8_t sda, uint8_t clk, as5600_t* as5600)
+as5600_t as5600_init(uint8_t sda, uint8_t clk, uint baudrate)
 {
-    if (get_gpio_i2c_type(sda) != DATA)
-        return 3;
-    if (get_gpio_i2c_type(clk) != CLOCK)
-        return 2;
+    // if (get_gpio_i2c_type(sda) != DATA)
+    //     return 3;
+    // if (get_gpio_i2c_type(clk) != CLOCK)
+    //     return 2;
 
-    as5600->i2c_inst = get_i2c_inst(sda);
+    // as5600->i2c_inst = get_i2c_inst(sda);
 
-    if (as5600->i2c_inst != get_i2c_inst(clk))
-        return 1;
+    // if (as5600->i2c_inst != get_i2c_inst(clk))
+    //     return 1;
+    i2c_inst_t* i2c_instance = get_i2c_inst(sda);
 
+    i2c_init(i2c_instance, baudrate);
     gpio_set_function(sda, GPIO_FUNC_I2C);
     gpio_set_function(clk, GPIO_FUNC_I2C);
     gpio_pull_up(sda);
     gpio_pull_up(clk);
 
-    as5600->sda = sda;
-    as5600->clk = clk;
+    // as5600->sda = sda;
+    // as5600->clk = clk;
 
-    return 0;
+    return (as5600_t) {sda, clk, i2c_instance};
 }
 
 /**

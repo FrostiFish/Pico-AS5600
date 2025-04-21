@@ -10,7 +10,7 @@
  */
 
 #include <stdio.h>
-#include "AS5600.h"
+#include "as5600.h"
 #include "hardware/gpio.h"
 #include "hardware/i2c.h"
 #include "pico/stdlib.h"
@@ -64,7 +64,7 @@ void print_poss_and_angs(as5600_t* as5600)
 
 int main()
 {
-    as5600_t as5600 = { 0 };
+    //as5600_t as5600 = { 0 };
     static as5600_conf_t as5600_conf;
     static as5600_conf_t as5600_conf_bckp;
     static uint16_t value, reach, zpos, mpos, mang;
@@ -73,10 +73,10 @@ int main()
     printf("Switch serial to terminal mode so carriage return is respected!\n");
 
     // Setup i2c
-    i2c_init(i2c_default, 400 * 1000);
+    // i2c_init(i2c_default, 400 * 1000);
 
     // Setup as5600
-    as5600_init(PICO_DEFAULT_I2C_SDA_PIN, PICO_DEFAULT_I2C_SCL_PIN, &as5600);
+    as5600_t as5600 = as5600_init(PICO_DEFAULT_I2C_SDA_PIN, PICO_DEFAULT_I2C_SCL_PIN, 400 * 1000);
 
     // Read as5600 configuration
     as5600_read_conf(&as5600, &as5600_conf);

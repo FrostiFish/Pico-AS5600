@@ -123,7 +123,7 @@ typedef enum {
 
 // Setup functions
 
-int8_t as5600_init(uint8_t sda, uint8_t clk, as5600_t* as5600);
+as5600_t as5600_init(uint8_t sda, uint8_t clk, uint baudrate);
 
 // Read / write functions
 

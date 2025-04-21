@@ -28,39 +28,39 @@ set(PICO_BOARD pico CACHE STRING "Board type")
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
 
-project(Pico-AS5600 C CXX ASM)
+project(pico-as5600 C CXX ASM)
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
 # add subdirectories
-add_subdirectory(lib/AS5600)
+add_subdirectory(lib/pico_as5600)
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(Pico-AS5600 as5600_example.c )
+add_executable(pico-as5600 as5600_example.c )
 
-pico_set_program_name(Pico-AS5600 "Pico-AS5600")
-pico_set_program_version(Pico-AS5600 "0.1")
+pico_set_program_name(pico-as5600 "pico-as5600")
+pico_set_program_version(pico-as5600 "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(Pico-AS5600 0)
-pico_enable_stdio_usb(Pico-AS5600 1)
+pico_enable_stdio_uart(pico-as5600 0)
+pico_enable_stdio_usb(pico-as5600 1)
 
 # Add the standard library to the build
-target_link_libraries(Pico-AS5600
+target_link_libraries(pico-as5600
         pico_stdlib)
 
 # Add the standard include files to the build
-target_include_directories(Pico-AS5600 PRIVATE
+target_include_directories(pico-as5600 PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
 )
 
 # Add any user requested libraries
-target_link_libraries(Pico-AS5600 
+target_link_libraries(pico-as5600 
         hardware_i2c
         pico_as5600
         )
 
-pico_add_extra_outputs(Pico-AS5600)
+pico_add_extra_outputs(pico-as5600)
 
