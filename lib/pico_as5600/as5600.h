@@ -1,12 +1,12 @@
 /*
- * File: dwm_pico_AS5600.h
- * Project: dwm_pico_as5600
+ * File: as5600.h
+ * Project: pico-as5600
  * -----
  * This source code is released under BSD-3 license.
  * Check LICENSE file for full license agreement.
  * Check COPYING for 3rd party licenses.
  * -----
- * Copyright 2024 M.Kusiak (Timax)
+ * Original Copyright 2024 M.Kusiak (Timax), edited 2025 by H.Eikens (FrostiFish)
  */
 
 #ifndef AS5600_H
@@ -23,7 +23,7 @@
 typedef struct
 {
     uint8_t sda;
-    uint8_t clk;
+    uint8_t scl;
     i2c_inst_t* i2c_inst;
 } as5600_t;
 
@@ -123,7 +123,7 @@ typedef enum {
 
 // Setup functions
 
-as5600_t as5600_init(uint8_t sda, uint8_t clk, uint baudrate);
+as5600_t as5600_init(uint8_t sda, uint8_t scl, uint baudrate);
 
 // Read / write functions
 

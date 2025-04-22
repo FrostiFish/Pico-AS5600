@@ -117,7 +117,7 @@ int main()
     while (value != reach) {
         value = as5600_read_raw_angl(&as5600);
 
-        printf("Current value: %d%s\r", value, SPACES);
+        printf("Current value: %d%s\n", value, SPACES);
     }
 
     // Display raw angle in degrees
@@ -130,7 +130,7 @@ int main()
     while (value != reach) {
         value = as5600_angl_to_degr(as5600_read_raw_angl(&as5600), 0, AS5600_MAX_ANGLE);
 
-        printf("Current value: %d degrees%s\r", value, SPACES);
+        printf("Current value: %d degrees%s\n", value, SPACES);
     }
 
     // Write zpos (zero position)
@@ -150,7 +150,7 @@ int main()
     while (value != reach) {
         value = as5600_read_raw_angl(&as5600);
 
-        printf("Raw value: %d | Non-raw value: %d%s\r", value, as5600_read_angl(&as5600), SPACES);
+        printf("Raw value: %d | Non-raw value: %d%s\n", value, as5600_read_angl(&as5600), SPACES);
     }
 
     // Write zpos and mpos
@@ -172,7 +172,7 @@ int main()
     while (value != reach) {
         value = as5600_angl_to_degr(as5600_read_angl(&as5600), 0, mpos);
 
-        printf("Current value: %d degrees | Angle: %d%s\r", value, as5600_read_angl(&as5600), SPACES);
+        printf("Current value: %d degrees | Angle: %d%s\n", value, as5600_read_angl(&as5600), SPACES);
     }
 
     // Show zpos/mpos relation
@@ -195,7 +195,7 @@ int main()
     while (value != reach) {
         value = as5600_angl_to_degr(as5600_read_angl(&as5600), zpos, mpos);
 
-        printf("Current value: %d degrees | Angle: %d%s\r", value, as5600_read_angl(&as5600), SPACES);
+        printf("Current value: %d degrees | Angle: %d%s\n", value, as5600_read_angl(&as5600), SPACES);
     }
 
     // Write mpos, mang
@@ -217,7 +217,7 @@ int main()
         // Note that zpos was not updated
         value = as5600_angl_to_degr(as5600_read_angl(&as5600), zpos, as5600_mang_to_mpos(zpos, mang));
 
-        printf("Current value: %d degrees | Angle: %d%s\r", value, as5600_read_angl(&as5600), SPACES);
+        printf("Current value: %d degrees | Angle: %d%s\n", value, as5600_read_angl(&as5600), SPACES);
     }
 
     // Clean "settings"

@@ -1,12 +1,12 @@
 /*
- * File: dwm_pico_AS5600.c
- * Project: dwm_pico_as5600
+ * File: as5600.c
+ * Project: pico-as5600
  * -----
  * This source code is released under BSD-3 license.
  * Check LICENSE file for full license agreement.
  * Check COPYING for 3rd party licenses.
  * -----
- * Copyright 2024 M.Kusiak (Timax)
+ * Original Copyright 2024 M.Kusiak (Timax), edited 2025 by H.Eikens (FrostiFish)
  */
 
 #include <stdio.h>
@@ -112,44 +112,44 @@ i2c_inst_t* get_i2c_inst(uint8_t gpio)
 #define I2C_INSTANCE_BY_GPIO(gpio) (((gpio % 4) < 2) ? i2c0 : i2c1 )
 #define I2C_NUM_BY_GPIO(gpio) (((gpio % 4) < 2) ? 0 : 1 )
 
-#define AS5600_ASSERT_I2C(sda, clk) ( (GPIO_I2C_TYPE(sda) != DATA) | (GPIO_I2C_TYPE(clk) != CLOCK) | (I2C_NUM_BY_GPIO(sda) != I2C_NUM_BY_GPIO(clk)) ? 0 : 1)
+#define AS5600_ASSERT_I2C(sda, scl) ( (GPIO_I2C_TYPE(sda) != DATA) | (GPIO_I2C_TYPE(scl) != CLOCK) | (I2C_NUM_BY_GPIO(sda) != I2C_NUM_BY_GPIO(scl)) ? 0 : 1)
 
 /**
  * @brief           Initialise as5600 module.
  *
  * @param sda       sda (data) gpio number.
- * @param clk       clk (clock) gpio number.
+ * @param scl       scl (clock) gpio number.
  * @param as5600    as5600 instance to fill.
  * @return          3 if sda not connected to sda pin on pi pico,
- *                  2 if clk not connected to clk pin on pi pico,
+ *                  2 if scl not connected to scl pin on pi pico,
  *                  1 if pins are under different i2c instances,
  *                  0 on success.
  *
  * @warning         i2c must be initialised first!
  */
-as5600_t as5600_init(uint8_t sda, uint8_t clk, uint baudrate)
+as5600_t as5600_init(uint8_t sda, uint8_t scl, uint baudrate)
 {
     // if (get_gpio_i2c_type(sda) != DATA)
     //     return 3;
-    // if (get_gpio_i2c_type(clk) != CLOCK)
+    // if (get_gpio_i2c_type(scl) != CLOCK)
     //     return 2;
 
     // as5600->i2c_inst = get_i2c_inst(sda);
 
-    // if (as5600->i2c_inst != get_i2c_inst(clk))
+    // if (as5600->i2c_inst != get_i2c_inst(scl))
     //     return 1;
     i2c_inst_t* i2c_instance = get_i2c_inst(sda);
 
     i2c_init(i2c_instance, baudrate);
     gpio_set_function(sda, GPIO_FUNC_I2C);
-    gpio_set_function(clk, GPIO_FUNC_I2C);
+    gpio_set_function(scl, GPIO_FUNC_I2C);
     gpio_pull_up(sda);
-    gpio_pull_up(clk);
+    gpio_pull_up(scl);
 
     // as5600->sda = sda;
-    // as5600->clk = clk;
+    // as5600->scl = scl;
 
-    return (as5600_t) {sda, clk, i2c_instance};
+    return (as5600_t) {sda, scl, i2c_instance};
 }
 
 /**
