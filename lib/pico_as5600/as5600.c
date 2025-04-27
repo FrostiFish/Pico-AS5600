@@ -76,45 +76,6 @@ typedef enum {
 } as5600_data_len_t;
 
 /**
- * @brief i2c pin types.
- */
-typedef enum {
-    CLOCK,
-    DATA
-} gpio_i2c_t;
-
-/**
- * @brief       Get gpio pin i2c type.
- *
- * @param gpio  gpio pin.
- * @return      i2c pin type.
- */
-gpio_i2c_t get_gpio_i2c_type(uint8_t gpio)
-{
-    if (gpio % 2)
-        return CLOCK;
-    return DATA;
-}
-#define GPIO_I2C_TYPE(gpio) ((gpio % 2) ? CLOCK : DATA )
-
-/**
- * @brief       Get i2c instance number.
- *
- * @param gpio  gpio pin.
- * @return      i2c instance number.
- */
-i2c_inst_t* get_i2c_inst(uint8_t gpio)
-{
-    if ((gpio % 4) < 2)
-        return i2c0;
-    return i2c1;
-}
-#define I2C_INSTANCE_BY_GPIO(gpio) (((gpio % 4) < 2) ? i2c0 : i2c1 )
-#define I2C_NUM_BY_GPIO(gpio) (((gpio % 4) < 2) ? 0 : 1 )
-
-#define AS5600_ASSERT_I2C(sda, scl) ( (GPIO_I2C_TYPE(sda) != DATA) | (GPIO_I2C_TYPE(scl) != CLOCK) | (I2C_NUM_BY_GPIO(sda) != I2C_NUM_BY_GPIO(scl)) ? 0 : 1)
-
-/**
  * @brief           Initialise as5600 module.
  *
  * @param sda       sda (data) gpio number.
@@ -127,7 +88,7 @@ i2c_inst_t* get_i2c_inst(uint8_t gpio)
  *
  * @warning         i2c must be initialised first!
  */
-as5600_t as5600_init(uint8_t sda, uint8_t scl, uint baudrate)
+as5600_t as5600_init(uint8_t sda, uint8_t scl, i2c_inst_t* i2c_instance)
 {
     // if (get_gpio_i2c_type(sda) != DATA)
     //     return 3;
@@ -138,13 +99,13 @@ as5600_t as5600_init(uint8_t sda, uint8_t scl, uint baudrate)
 
     // if (as5600->i2c_inst != get_i2c_inst(scl))
     //     return 1;
-    i2c_inst_t* i2c_instance = get_i2c_inst(sda);
+    //i2c_inst_t* i2c_instance = get_i2c_inst(sda);
 
-    i2c_init(i2c_instance, baudrate);
-    gpio_set_function(sda, GPIO_FUNC_I2C);
-    gpio_set_function(scl, GPIO_FUNC_I2C);
-    gpio_pull_up(sda);
-    gpio_pull_up(scl);
+    //i2c_init(i2c_instance, baudrate);
+    // gpio_set_function(sda, GPIO_FUNC_I2C);
+    // gpio_set_function(scl, GPIO_FUNC_I2C);
+    // gpio_pull_up(sda);
+    // gpio_pull_up(scl);
 
     // as5600->sda = sda;
     // as5600->scl = scl;

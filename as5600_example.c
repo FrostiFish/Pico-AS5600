@@ -1,16 +1,17 @@
 /*
  * File: as5600_example.c
- * Project: dwm_pico_as5600
+ * Project: pico-as5600
  * -----
  * This source code is released under BSD-3 license.
  * Check LICENSE file for full license agreement.
  * Check COPYING for 3rd party licenses.
  * -----
- * Copyright 2024 M.Kusiak (Timax)
+ * Original Copyright 2024 M.Kusiak (Timax), edited 2025 by H.Eikens (FrostiFish)
  */
 
 #include <stdio.h>
 #include "as5600.h"
+#include "i2c_helpers.h"
 #include "hardware/gpio.h"
 #include "hardware/i2c.h"
 #include "pico/stdlib.h"
@@ -19,6 +20,9 @@
 #define SPACES "                              "
 
 // Connect SDA to pin 4 and scl to pin 5 on pi pico.
+#define SDA PICO_DEFAULT_I2C_SDA_PIN
+#define SCL PICO_DEFAULT_I2C_SCL_PIN
+#define I2C GPIO_TO_I2C_INSTANCE(PICO_DEFAULT_I2C_SDA_PIN)
 
 // Print configuration
 void print_conf(as5600_conf_t* as5600_conf)
@@ -64,19 +68,19 @@ void print_poss_and_angs(as5600_t* as5600)
 
 int main()
 {
-    //as5600_t as5600 = { 0 };
-    static as5600_conf_t as5600_conf;
-    static as5600_conf_t as5600_conf_bckp;
-    static uint16_t value, reach, zpos, mpos, mang;
-
     stdio_init_all();
     printf("Switch serial to terminal mode so carriage return is respected!\n");
 
     // Setup i2c
-    // i2c_init(i2c_default, 400 * 1000);
+    ASSERT_I2C_CONFIG(SDA, SCL); //check I2C config
+    i2c_init(I2C, 400 * 1000);
+    i2c_set_gpio(SDA, SCL);
 
     // Setup as5600
-    as5600_t as5600 = as5600_init(PICO_DEFAULT_I2C_SDA_PIN, PICO_DEFAULT_I2C_SCL_PIN, 400 * 1000);
+    as5600_t as5600 = as5600_init(SDA, SCL, I2C);
+    static as5600_conf_t as5600_conf;
+    static as5600_conf_t as5600_conf_bckp;
+    static uint16_t value, reach, zpos, mpos, mang;
 
     // Read as5600 configuration
     as5600_read_conf(&as5600, &as5600_conf);

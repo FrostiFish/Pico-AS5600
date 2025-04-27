@@ -35,6 +35,7 @@ pico_sdk_init()
 
 # add subdirectories
 add_subdirectory(lib/pico_as5600)
+add_subdirectory(lib/pico_i2c_helpers)
 
 # Add executable. Default name is the project name, version 0.1
 
@@ -60,6 +61,7 @@ target_include_directories(pico-as5600 PRIVATE
 target_link_libraries(pico-as5600 
         hardware_i2c
         pico_as5600
+        pico_i2c_helpers
         )
 
 pico_add_extra_outputs(pico-as5600)
