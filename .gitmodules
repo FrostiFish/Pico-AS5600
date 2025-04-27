@@ -1,6 +1,0 @@
-[submodule "lib/pico_as5600"]
-	path = lib
-	url = https://github.com/FrostiFish/pico_as5600.git
-[submodule "lib/pico_i2c_helpers"]
-	path = lib
-	url = https://github.com/FrostiFish/pico_i2c_helpers.git
